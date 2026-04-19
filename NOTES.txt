@@ -1,1 +1,18 @@
 mtm (My Task Manager)
+
+Data-First
+- User
+- Workspaces <- top-level org (company or personal)
+- Projects <- lives inside a workspace
+- Task <- lives inside a project
+- Subtask <- a task with a parent_task_id (self-referencing)
+- Tags<- reusable labels across projects
+- Comment <- belongs to task
+- Attachment <- file linked to a task
+- Notification <- activity alertsper user
+
+Data Relationships
+(1:1, 1:M, M:M, Self-Join)
+One-to-Many -> one parent, many children
+Many-to-Many -> many on both sides, needs a middle table
+Self-join -> a table that references itself
