@@ -1,4 +1,25 @@
 ============= mtm (My Task Manager) =============
+*** FrontEnd ***
+React + Typescript
+
+*** Mobile ***
+React Native
+
+*** Backend ***
+Node.js + Fastify
+
+*** Database ***
+PostgreSQL + Prisma ORM
+
+*** Auth ***
+Auth.js
+
+*** Real-Time Sync ***
+WebSockets
+
+*** Deployment ***
+Frontend/mobile web -> Vercel. Backend -> Railway, Fly.io, or a VPS(Hetzner).DB -> Supabase or Neon(serverless Postgres)
+
 
 ============= Data-First =============
 - User
