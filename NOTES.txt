@@ -1,6 +1,6 @@
-mtm (My Task Manager)
+============= mtm (My Task Manager) =============
 
-Data-First
+============= Data-First =============
 - User
 - Workspaces <- top-level org (company or personal)
 - Projects <- lives inside a workspace
@@ -11,8 +11,94 @@ Data-First
 - Attachment <- file linked to a task
 - Notification <- activity alertsper user
 
-Data Relationships
+============= Data Relationships =============
 (1:1, 1:M, M:M, Self-Join)
 One-to-Many -> one parent, many children
 Many-to-Many -> many on both sides, needs a middle table
 Self-join -> a table that references itself
+
+*** Task ***
+id -> uuid
+title -> string, required
+description -> text, nullable
+status -> enum: TODO | IN_PROGRESS | IN_REVIEW | DONE | CANCELLED
+priority -> enum: LOW | MEDIUM | HIGH | URGENT 
+due_date -> timestamp, nullable
+created_at -> timestamp
+updated_at -> timestamp
+creator_id -> User
+assignee_id -> User, nullable
+project_id -> Project
+parent_task_id -> Task, nullable (subtask)
+position -> float (for drag-and-drop ordering)
+
+*** User ***
+id -> uuid
+email -> string, unique
+full_name -> string
+avatar_url -> string, nullable
+created_at -> timestamp
+
+*** Workspace ***
+id -> uuid
+name -> string
+slug -> string, unique (for URLs: app.com/my-workspace)
+owner_id -> User
+created_at -> timestamp
+
+*** WorkspaceMember (join table with role) ***
+workspace_id -> Workspace
+user_id -> User
+role -> enum: OWNER | ADMIN | MEMBER | GUEST
+joined_at -> timestamp
+
+*** Project ***
+id -> uuid
+name -> string
+description -> text, nullable
+color -> string (hex, for UI)
+workspace_id -> Workspace
+created_at -> timestamp
+
+============= API routing =============
+*** Auth ***
+POST /auth/register
+POST /auth/login
+POST /auth/logout
+GET /auth/me
+
+*** Workspaces ***
+GET /workspace
+POST /workspace
+GET /workspaces/:slug
+PATCH /workspaces/:id
+DELETE /workspaces/:id
+
+*** Projects ***
+GET /workspaces/:id/projects
+POST /workspaces/:id/projects
+PATCH /projects/:id
+DELETE /projects/:id
+
+*** Tasks ***
+GET /projects/:id/tasks
+POST /projects/:id/tasks
+GET /tasks/:id
+PATCH /tasks/:id
+DELETE /tasks/:id
+PATCH /tasks/:id/move <- change project or reorder
+
+*** Comments ***
+GET /tasks/:id/comments
+POST /tasks/:id/comments
+DELETE /comments/:id
+
+
+============= UI Views =============
+/login
+/register
+/:workspace <- workspace home, project list
+/:workspace/:project <- task board (kanban or list)
+/:workspace/:project/:task <- task detail panel
+/settings/workspace
+/settings/profile
