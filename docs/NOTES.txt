@@ -123,3 +123,22 @@ DELETE /comments/:id
 /:workspace/:project/:task <- task detail panel
 /settings/workspace
 /settings/profile
+
+============= Mono Repo =============
+cd /home/ichiro/Desktop/project/mtm
+
+# Create the structure
+mkdir -p apps/web apps/api packages/ui
+
+# Verify structure
+tree . -I node_modules
+
+
+mtm/
+├── apps/
+│   ├── api/
+│   └── web/
+├── docs/
+├── packages/
+│   └── ui/
+└── README.md
