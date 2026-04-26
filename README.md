@@ -15,3 +15,22 @@ mtm/
 ├── package.json
 └── turbo.json
 ```
+
+### Features
+- ***Auth***
+Sign up / login / logout
+OAuth
+Invite teammates via email
+- ***Workspaces***
+Create / switch workspaces
+Member roles (Owner, Admin, Member, Guest)
+
+- ***Projects***
+Create / achive projects
+Project color and icon
+
+- ***Tasks***
+Create, edit, delete tasks
+Title, description
+Status, priority
+
