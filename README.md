@@ -32,5 +32,14 @@ Project color and icon
 - ***Tasks***
 Create, edit, delete tasks
 Title, description
-Status, priority
+Status, priority, dues date
+Assignee
+SUbtaska
+Tags / labels
+Drag-and-Drop reordering
+
+- ***Views***
+Kanban board
+List view
+Search across all tasks
 
