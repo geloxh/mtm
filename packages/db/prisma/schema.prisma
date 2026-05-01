@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  fullName   String
+  avatarUrl  String?
+  createdAt  DateTime @default(now())
+
+  ownedWorkspaces   Workspace[]       @relation("WorkspaceOwner")
+  workspaceMemberships WorkspaceMember[]
+  createdTasks      Task[]            @relation("TaskCreator")
+  assignedTasks     Task[]            @relation("TaskAssignee")
+  comments          Comment[]
+}
+
+model Workspace {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  owner     User              @relation("WorkspaceOwner", fields: [ownerId], references: [id])
+  ownerId   String
+  members   WorkspaceMember[]
+  projects  Project[]
+}
+
+model WorkspaceMember {
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  role        Role      @default(MEMBER)
+  joinedAt    DateTime  @default(now())
+
+  @@id([workspaceId, userId])
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  color       String   @default("#6366f1")
+  archived    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  tasks       Task[]
+}
+
+model Task {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  priority    Priority   @default(MEDIUM)
+  dueDate     DateTime?
+  position    Float      @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String
+  creator     User     @relation("TaskCreator", fields: [creatorId], references: [id])
+  creatorId   String
+  assignee    User?    @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  assigneeId  String?
+  parentTask  Task?    @relation("Subtasks", fields: [parentTaskId], references: [id])
+  parentTaskId String?
+  subtasks    Task[]   @relation("Subtasks")
+  tags        Tag[]
+  comments    Comment[]
+  attachments Attachment[]
+}
+
+model Tag {
+  id    String @id @default(uuid())
+  name  String
+  color String @default("#6366f1")
+  tasks Task[]
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  body      String
+  createdAt DateTime @default(now())
+
+  task      Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId    String
+  author    User   @relation(fields: [authorId], references: [id])
+  authorId  String
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  url       String
+  filename  String
+  createdAt DateTime @default(now())
+
+  task      Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId    String
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MEMBER
+  GUEST
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  DONE
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
