@@ -8,16 +8,18 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@mtm/db": "*",
-    "@mtm/types": "*",
-    "fastify": "^5.8.5",
+    "@fastify/cookie": "^11.0.0",
     "@fastify/cors": "^10.0.0",
     "@fastify/jwt": "^9.0.0",
-    "@fastify/cookie": "^11.0.0"
+    "@mtm/db": "*",
+    "@mtm/types": "*",
+    "bcryptjs": "^3.0.3",
+    "fastify": "^5.8.5"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/node": "^20",
     "tsx": "^4.0.0",
-    "typescript": "^5",
-    "@types/node": "^20"
+    "typescript": "^5"
   }
 }
