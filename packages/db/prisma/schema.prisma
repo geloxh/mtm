@@ -12,6 +12,7 @@ model User {
   email      String   @unique
   fullName   String
   avatarUrl  String?
+  passwordHash String?
   createdAt  DateTime @default(now())
 
   ownedWorkspaces   Workspace[]       @relation("WorkspaceOwner")
