@@ -11,10 +11,13 @@
     "@fastify/cookie": "^11.0.0",
     "@fastify/cors": "^10.0.0",
     "@fastify/jwt": "^9.0.0",
+    "@fastify/type-provider-zod": "^1.0.0",
     "@mtm/db": "*",
     "@mtm/types": "*",
     "bcryptjs": "^3.0.3",
-    "fastify": "^5.8.5"
+    "fastify": "^5.8.5",
+    "fastify-plugin": "^5.1.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",
