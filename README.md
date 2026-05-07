@@ -1,11 +1,11 @@
 ### mtm (My Task Manager)
-Maintainable and scalable application and web app task manager project for professional documentation and leveraging productivity accomplishments.
+Maintainable and scalable mobile application and web app task manager project for professional documentation and leveraging productivity accomplishments.
 
 ### Project Structure
 Comprehensive initial Project structure for reference and future improvements.
 
 - **Layered Backend Architecture**
-![alt text](mtm-backend.jpg)
+![alt text](mtm-backend.png)
 
 - **Backend Folder Structure**
 This is the initial backend folder structure
@@ -40,11 +40,23 @@ mtm-backend/
 RESTful APIs
 
 ```
-POST /auth/register, POST /auth/login, POST /auth/refresh — authentication
-GET/POST /tasks, PATCH /tasks/:id, DELETE /tasks/:id — task CRUD
-GET/POST /projects, GET /projects/:id/tasks — project and board management
-GET /users/me, PATCH /users/me/preferences — user profile
-GET /notifications + WebSocket at /ws — real-time updates
+POST   /api/v1/auth/register
+POST   /api/v1/auth/login
+POST   /api/v1/auth/refresh
+DELETE /api/v1/auth/logout
+
+GET    /api/v1/projects
+POST   /api/v1/projects
+PATCH  /api/v1/projects/:id
+DELETE /api/v1/projects/:id
+
+GET    /api/v1/projects/:projectId/tasks
+POST   /api/v1/projects/:projectId/tasks
+GET    /api/v1/tasks/:id
+PATCH  /api/v1/tasks/:id
+DELETE /api/v1/tasks/:id
+POST   /api/v1/tasks/:id/comments
+PATCH  /api/v1/tasks/reorder       # for drag-and-drop
 ```
 - **DB Schema**
 Core Tables
@@ -73,51 +85,23 @@ Initial best stack for maintainability and scalability
 - JWT + Refresh Tokens
 - OAuth2
 
-
-
-### Features
-***Layer 1***
-- ***Auth***
-Sign up / login / logout
-OAuth
-Invite teammates via email
-- ***Workspaces***
-Create / switch workspaces
-Member roles (Owner, Admin, Member, Guest)
-
-- ***Projects***
-Create / achive projects
-Project color and icon
-
-- ***Tasks***
-Create, edit, delete tasks
-Title, description
-Status, priority, dues date
-Assignee
-SUbtaska
-Tags / labels
-Drag-and-Drop reordering
-
-- ***Views***
-Kanban board
-List view
-Search across all tasks
-
-***Layer 2***
-Comments on tasks
-File attachments
-Activity feed
-Notifications
-Keyboard shortcuts
-Dark mode
-Due date reminders
-Filter & sort tasks
-
-***Layer 3***
-Calendar view
-Time tracking
-Dashboard / analytics
-Push notifications (mobile)
-Offline mode (mobile + desktop)
-Export to CSV / PDF
-Mentions (@user in comments)
+### Installations
+- **mtm-backend**
+npm init -y (package.json)
+- **Core dependencies**
+npm install fastify @fastify/cors @fastify/cookie @fastify/websocket @fastify/rate-limit
+npm install @prisma/client
+npm install zod
+npm install jsonwebtoken
+npm install ioredis
+npm install bullmq
+npm install pino pino-pretty
+npm install passport passport-google-oauth20 passport-github2
+npm install bcryptjs
+npm install uuid
+- **DevDependencies**
+npm install -D typescript ts-node tsx
+npm install -D @types/node @types/jsonwebtoken @types/passport @types/bcryptjs @types/uuid
+npm install -D prisma
+npm install -D vitest supertest @types/supertest
+npm install -D eslint prettier
