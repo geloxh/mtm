@@ -1,22 +1,22 @@
 import { z } from 'zod'
 
 export const registerSchema = z.object({
-  email:       z.string().email(),
-  password:    z.string().min(8),
+  email: z.string().email(),
+  password: z.string().min(8),
   displayName: z.string().min(2),
 })
 
 export const loginSchema = z.object({
-  email:    z.string().email(),
+  email: z.string().email(),
   password: z.string(),
 })
 
 export const createTaskSchema = z.object({
-  title:       z.string().min(1).max(255),
+  title: z.string().min(1).max(255),
   description: z.string().optional(),
-  priority:    z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']).default('MEDIUM'),
-  dueDate:     z.string().datetime().optional(),
-  assigneeId:  z.string().uuid().optional(),
+  priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']).default('MEDIUM'),
+  dueDate: z.string().datetime().optional(),
+  assigneeId: z.string().uuid().optional(),
 })
 
 export const createProjectSchema = z.object({
